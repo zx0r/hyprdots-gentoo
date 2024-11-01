@@ -1,0 +1,277 @@
+* {
+  font-family: "JetBrainsMono Nerd Font", "Iosevka Nerd Font";
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: bold;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar {
+  background: rgba(0, 0, 0, 0.8);
+  /* border-bottom: 2px solid #ff00ff; */
+  /* box-shadow: 0 0 5px #ff00ff; */
+  color: #cba6f7;
+}
+
+/* Futuristic Tooltip */
+tooltip {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #ffff00;
+  border-radius: 10px;
+}
+
+tooltip label {
+  color: #00ff9f;
+  text-shadow: 0 0 5px #00ff9f;
+  padding: 2px;
+}
+
+#backlight,
+#backlight-slider,
+#battery,
+#bluetooth,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#keyboard-state,
+#language,
+#memory,
+#mode,
+#mpris,
+#network,
+#power-profiles-daemon,
+#pulseaudio,
+#pulseaudio-slider,
+#pulseaudio-microphone,
+#taskbar,
+#temperature,
+#tray,
+#window,
+#wireplumber,
+#workspaces,
+#custom-backlight,
+#custom-browser,
+#custom-cava_mviz,
+#custom-cycle_wall,
+#custom-theme,
+#custom-wallchange,
+#custom-hackernews,
+#custom-rssticker-soylent,
+#custom-crypto,
+#custom-cpuinfo,
+#custom-gpuinfo,
+#custom-tor,
+#custom-vpn,
+#custom-docker,
+#custom-syncthing,
+#custom-sensors,
+#custom-screenrecord,
+#custom-file_manager,
+#custom-keybinds,
+#custom-keyboard,
+#custom-light_dark,
+#custom-lock,
+#custom-hint,
+#custom-hypridle,
+#custom-menu,
+#custom-power-menu,
+#custom-power_vertical,
+#custom-power,
+#custom-settings,
+#custom-spotify,
+#custom-swaync,
+#custom-tty,
+#custom-updater,
+#custom-weather,
+#custom-weather.clearNight,
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight,
+#custom-weather.default,
+#custom-weather.rainyDay,
+#custom-weather.rainyNight,
+#custom-weather.severe,
+#custom-weather.showyIcyDay,
+#custom-weather.snowyIcyNight,
+#custom-weather.sunnyDay {
+  color: #505050;
+}
+
+#clock:hover,
+#clock:hover ~ #audio,
+#clock:hover ~ #backlight {
+  transition: all 0.3s ease-in-out;
+}
+
+#clock {
+  color: #c6a0f6;
+  animation: gradient 20s ease infinite;
+  font-weight: bold;
+}
+
+/* #https://forum.garudalinux.org/t/how-to-add-png-jpg-svg-icons-to-waybar/32503 */
+#custom-launcher {
+  font-size: 20px;
+  background-image: url("$HOME/.config/waybar/logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#custom-power-menu {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+#custom-hackernews {
+  font-size: 12px;
+  color: #505050;
+}
+
+#language {
+  padding: 4px;
+}
+
+#network {
+  padding: 3px;
+}
+
+#network.disconnected {
+  background-color: #f53c3c;
+}
+
+#pulseaudio {
+  font-weight: bold;
+}
+
+#pulseaudio.muted {
+  color: #2a5c45;
+}
+
+#language {
+  font-weight: bold;
+}
+
+#keyboard-state {
+  font-weight: bold;
+  color: #c6a0f6;
+}
+
+#keyboard-state > label {
+  padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#idle_inhibitor {
+  background-color: #2d3436;
+}
+
+#idle_inhibitor.activated {
+  background-color: #ecf0f1;
+  color: #2d3436;
+}
+
+#mpd {
+  background-color: #66cc99;
+  color: #2a5c45;
+}
+
+#mpd.disconnected {
+  background-color: #f53c3c;
+}
+
+#mpd.stopped {
+  background-color: #90b1b1;
+}
+
+#mpd.paused {
+  background-color: #51a37a;
+}
+
+#tray {
+  font-size: 12px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  margin: 4px;
+  background: transparent;
+  color: #00ffff;
+  font-weight: bold;
+  transition: all 0.5s ease;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  border-radius: 5px;
+  box-shadow: 0 0 5px #cba6f7;
+}
+
+/* Hover effect */
+#workspaces button:hover {
+  border-radius: 5px;
+  box-shadow: 0 0 5px #cba6f7;
+  animation: buttonColorFade 3s ease infinite;
+}
+
+#workspaces button.urgent {
+  border-radius: 5px;
+  border-color: #ffff00;
+  box-shadow: 0 0 5px #ffff00;
+  animation: urgent-pulse 0.8s infinite;
+}
+
+@keyframes buttonColorFade {
+  0% {
+    color: #bf00ff;
+  }
+  50% {
+    color: black;
+  }
+  100% {
+    color: #bf00ff;
+  }
+}
+
+@keyframes urgent-pulse {
+  0% {
+    color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+  }
+  50% {
+    color: #ffff00;
+    box-shadow: 0 0 20px #ffff00;
+  }
+  100% {
+    color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+  }
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}

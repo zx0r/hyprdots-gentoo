@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# AUTHOR: lmburns (lmb@lmburns.com)
+#
+# DATE: 2021-06-13
+#
+# DESC: Elvi to search Library Genesis
+# elvis: libgen         	-- Search Library Genesis for ebooks (libgen.rs)
+. surfraw || exit 1
+
+w3_usage_hook () {
+    cat <<EOF
+Usage: $w3_argv0 [options] [search words]...
+Description:
+  Search Library Genesis (libgen.rs) for ebooks
+EOF
+    w3_global_usage
+}
+
+w3_config
+w3_parse_args "$@"
+
+if [[ -z "$w3_args" ]]; then
+    w3_browse_url "http://libgen.rs/"
+    exit
+fi
+
+set -f
+escaped_args="$(w3_url_of_arg $w3_args)"
+search_url="http://libgen.rs/search.php?req="
+search_url="${search_url}${escaped_args}"
+w3_browse_url "$search_url"

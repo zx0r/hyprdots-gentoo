@@ -1,0 +1,40 @@
+/* Cyberpunk Neon Color Palette */
+@define-color background     rgba(0, 0, 0, 0.5);
+@define-color foreground     #cba6f7;
+/* @define-color foreground     #00ff99; */
+@define-color cursor         #00ffff;
+
+/* Base Colors */
+@define-color color0         #1a1a1a;
+@define-color color1         #ff3366;
+@define-color color2         #00ff99;
+@define-color color3         #ffff00;
+@define-color color4         #00ffff;
+@define-color color5         #ff00ff;
+@define-color color6         #00ffff;
+@define-color color7         #c7c7c7;
+
+/* Bright Colors */
+@define-color color8         #333333;
+@define-color color9         #ff0066;
+@define-color color10        #00ff66;
+@define-color color11        #ffcc00;
+@define-color color12        #00ccff;
+@define-color color13        #cc66ff;
+@define-color color14        #66ffff;
+@define-color color15        #ffffff;
+
+/* Accent Colors */
+@define-color accent         #00ff00;
+@define-color accent-dark    #00cc00;
+@define-color accent-light   #66ff66;
+
+/* Special Colors */
+@define-color neon-red       #ff3366;
+@define-color neon-orange    #ff9933;
+@define-color neon-yellow    #ffff00;
+@define-color neon-green     #00ff99;
+@define-color neon-blue      #00ffff;
+@define-color neon-purple    #cc66ff;
+@define-color neon-magenta   #ff00ff;
+@define-color neon-cyan      #00ffff;

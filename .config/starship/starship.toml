@@ -1,0 +1,396 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# include = '/usr/share/foot/themes/cyberpunk-neon'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+# position custom commands individuall with "${custom.your_cmd}" brackets are necessary
+# format = '$custom$time$all${custom.git_ghost}${custom.git_wip}$character'
+# right_format = "${custom.is_private_label_right}"
+
+# palette = "catppuccin_macchiato"
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold #00ff00)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = "[➜](bold #ff0000)"
+#error_symbol = "[✖](bold #ff0000)"
+vicmd_symbol = "[](bold #ffff00)"
+
+# Duration entry
+[cmd_duration]
+min_time = 10000
+format = "[󰔟 $duration](bold cyan)"
+
+[git_status]
+ahead = '[ $count](bold green) '
+conflicted = '[󱡂 ](bold red) '
+untracked = '[ $count](bold purple) '
+staged = '[ $count](bold green) '
+stashed = '[ $count](cyan) '
+deleted = '[ $count](bold red) '
+modified = '[ $count](bold yellow) '
+behind = '[ $count](bold yellow) '
+renamed = '[󰬴 $count](bold blue) '
+up_to_date = '[ ](bold green) '
+diverged = '[ $ahead_count  $behind_count ](bold red) '
+format = '([$all_status$ahead_behind]($style))'
+
+# Git entry
+[git_metrics]
+disabled = false
+added_style = "green"
+deleted_style = "red"
+format = '(\([+$added]($added_style)/[-$deleted]($deleted_style)\)) '
+
+[git_branch]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+# Gcloud entry
+[gcloud]
+format = "on [$symbol$domain]($style) "
+symbol = "☁️ "
+style = "bold blue"
+
+# Directory entry
+[directory]
+read_only = " 󰌾 "
+home_symbol = " "
+truncation_length = 3
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Repos" = " "
+"Videos" = " "
+"obsidianVault" = "󰏪 󰠮 "
+".config" = " "
+
+[custom.is_fish]
+description = "Indicates when in FISH shell"
+when = 'test "$STARSHIP_SHELL" = "fish"'
+shell = ["bash", "--norc"]
+command = 'echo "👽"'
+format = '[ $output ](black) '
+
+[custom.is_bash]
+description = "Indicates when in BASH shell"
+command = "echo ''"
+shell = ["bash", "--norc"]                   # for fastest performance
+when = 'test "$STARSHIP_SHELL" = "bash"'
+format = '[ $output ](bg:white black) '
+
+[custom.is_private_label_right]
+description = "Indicates when in ZSH is running without $HISTFILE"
+command = 'echo "󰗹 PRIVATE"'
+when = '[ -n "$NOHISTFILE" ] && [ "$STARSHIP_SHELL" == "zsh" ]'
+# shell = ["sh", "--norc"]                                           # for fastest performance
+format = '[ $output ](bg:purple black) '
+
+[custom.is_private_icon]
+description = "Indicates when in ZSH is running without $HISTFILE"
+command = 'echo "󰗹"'
+when = '[ -n "$NOHISTFILE" ] && [ "$STARSHIP_SHELL" == "zsh" ]'
+# shell = ["sh", "--norc"]                                           # for fastest performance
+format = '[ $output ](bg:purple black) '
+
+[custom.git_ghost]
+description = "Indicates when a Git Repo contains in ZSH is running without $HISTFILE"
+command = 'echo "󱙝"'
+when = '[ -d .git ] && git ghosted >& /dev/null'
+# shell = ["sh", "--norc"]                                                               # for fastest performance
+format = '[ $output ](blue bold) '
+
+[custom.git_wip]
+description = "Indicates when a Git Repo contains latest commit is WIP"
+command = 'echo "WIP  "'
+when = '[ -d .git ] && git log -1 --pretty=%B | rg --line-regexp "WIP" >& /dev/null'
+# shell = ["sh", "--norc"]                                                             # for fastest performance
+format = '[ $output ](yellow bold) '
+
+# Custom entries
+[custom.yazi]
+description = "Shell launched inside Yazi"
+symbol = " "
+style = "blue bold"
+when = """ test -n "$YAZI_LEVEL" """
+
+[custom.neovim]
+command = 'bob ls | rg Used | awk "{print \$2}"' # shows output of command
+detect_folders = ["lua"]
+style = "#ff00ff"
+format = "[ $output ]($style)"
+shell = ["bash"]
+
+[custom.hypr]
+style = "blue"
+format = "[ ]($style)"
+detect_files = ["hyprland.conf"]
+
+[custom.ebuild]
+format = "via $symbol [$output]($style) "
+symbol = "📦"
+detect_extensions = ["ebuild"]
+style = "bold #FF8700"
+command = "ebuild --version"
+
+[custom.cpp]
+format = "via [$symbol]($style)[clang++ v$output]($style) "
+symbol = "  "
+detect_extensions = ["cpp", "hpp"]
+style = "bold #417AB1"
+command = "clang++ --version | head -1 | awk '{ print $3 }'"
+
+[custom.c]
+format = "via [$symbol]($style)[clang v$output]($style) "
+symbol = "  "
+detect_extensions = ["c", "h"]
+style = "bold #6876C5"
+command = "clang --version | head -1 | awk '{ print $3 }'"
+
+# Nerd fonts preset
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+disabled = true
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[fennel]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nim]
+symbol = "󰆥 "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+[package]
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[scala]
+symbol = " "
+
+[swift]
+symbol = " "
+
+[zig]
+symbol = " "
+
+# Theme
+# [palettes.catppuccin_macchiato]
+# rosewater = "#f4dbd6"
+# flamingo = "#f0c6c6"
+# pink = "#f5bde6"
+# mauve = "#c6a0f6"
+# red = "#ed8796"
+# maroon = "#ee99a0"
+# peach = "#f5a97f"
+# yellow = "#eed49f"
+# green = "#a6da95"
+# teal = "#8bd5ca"
+# sky = "#91d7e3"
+# sapphire = "#7dc4e4"
+# blue = "#8aadf4"
+# lavender = "#b7bdf8"
+# text = "#cad3f5"
+# subtext1 = "#b8c0e0"
+# subtext0 = "#a5adcb"
+# overlay2 = "#939ab7"
+# overlay1 = "#8087a2"
+# overlay0 = "#6e738d"
+# surface2 = "#5b6078"
+# surface1 = "#494d64"
+# surface0 = "#363a4f"
+# base = "#24273a"
+# mantle = "#1e2030"
+# crust = "#181926"
+
+# Nightfox colors for Kitty
+## name: carbonfox
+## upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/carbonfox/kitty.conf
+
+# background #161616
+# foreground #f2f4f8
+# selection_background #2a2a2a
+# selection_foreground #f2f4f8
+# cursor_text_color #161616
+# url_color #25be6a
+#
+# # Cursor
+# # uncomment for reverse background
+# # cursor none
+# cursor #f2f4f8
+#
+# # Border
+# active_border_color #78a9ff
+# inactive_border_color #535353
+# bell_border_color #3ddbd9
+#
+# # Tabs
+# active_tab_background #78a9ff
+# active_tab_foreground #0c0c0c
+# inactive_tab_background #2a2a2a
+# inactive_tab_foreground #6e6f70
+
+
+# [palettes.cyberpunk-neon]
+
+# # regular
+# color0 000000 #000000
+# color1 ee5396 #ee5396
+# color2 25be6a #25be6a
+# color3 08bdba #08bdba
+# color4 78a9ff #78a9ff
+# color5 be95ff #be95ff
+# color6 31b1ff #33b1ff
+# color7 dfdfe0 #dfdfe0
+#
+# # # bright
+# color8 484848 #484848
+# color9 f16da6 #f16da6
+# color10 46c880 #46c880
+# color11 2dc7c4 #2dc7c4
+# color12 8cb6ff #8cb6ff
+# color13 c8a5ff #c8a5ff
+# color14 52bdff #52bdff
+# color15 e4e4e5 #e4e4e5
+#

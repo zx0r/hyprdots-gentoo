@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+fetch_prices() {
+  local temp_file="/tmp/crypto_prices"
+  curl -s "rate.sx/?T&n=40" >"$temp_file"
+  sed 's/\xe2\x94\x82/,/g' "$temp_file" | tr -d ' '
+  rm "$temp_file"
+}
+
+get_crypto_data() {
+  local prices="$1"
+  local symbol="$2"
+  local data
+  local price
+  local change
+
+  data=$(printf "%s" "$prices" | rg ",$symbol,")
+  price=$(printf "%s" "$data" | cut -d ',' -f 4)
+  change=$(printf "%s" "$data" | cut -d ',' -f 6)
+  echo "$price:$change"
+}
+
+format_output() {
+  local price="$1"
+  local change="$2"
+  local color
+
+  # Set color based on change value
+  if [[ $change == +* ]]; then
+    color="#00ff00" # Green for positive
+  else
+    color="#ffff00" # Red for negative
+  fi
+
+  printf "<span color='%s'>$%'.2f</span>[<span color='#505050'>%s</span>]" "$color" "$price" "$change"
+}
+
+main() {
+  local PRICES
+  PRICES=$(fetch_prices)
+
+  local IFS=":"
+  read -r BTC_PRICE BTC_CHANGE <<<"$(get_crypto_data "$PRICES" "BTC")"
+  read -r ETH_PRICE ETH_CHANGE <<<"$(get_crypto_data "$PRICES" "ETH")"
+  read -r LTC_PRICE LTC_CHANGE <<<"$(get_crypto_data "$PRICES" "LTC")"
+  read -r XMR_PRICE XMR_CHANGE <<<"$(get_crypto_data "$PRICES" "XMR")"
+
+  local output="\"text\": \"BTC $(format_output "$BTC_PRICE" "$BTC_CHANGE") "
+  output+="ETH $(format_output "$ETH_PRICE" "$ETH_CHANGE") "
+  output+="LTC $(format_output "$LTC_PRICE" "$LTC_CHANGE") "
+  output+="XMR $(format_output "$XMR_PRICE" "$XMR_CHANGE")\""
+
+  printf "{%s, \"tooltip\": \"\", \"alt\": \"\", \"class\": \"\"}" "$output"
+}
+
+main

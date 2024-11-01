@@ -1,0 +1,173 @@
+# External Plugins
+.config/tmux/plugins/*
+.config/yazi/plugins/*
+
+# GPG configuration directory
+.config/gnupg/openpgp-revocs.d/
+.config/gnupg/private-keys-v1.d/
+.config/gnupg/pubring.kbx
+.config/gnupg/pubring.kbx~
+.config/gnupg/random_seed
+.config/gnupg/trustdb.gpg
+#.config/gnupg/gpg-agent.conf
+#.config/gnupg/gpg.conf
+#.config/gnupg/sshcontrol
+
+# Sensitive files
+*.key
+*.pem
+*.credentials
+*.password
+*.secret
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# MacOS
+._*
+.apdisk
+.AppleDB
+*.icloud
+.Trashes
+.DS_Store
+.LSOverride
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.VolumeIcon.icns
+.DocumentRevisions-V100
+.AppleDouble
+.AppleDesktop
+.com.apple.timemachine.donotpresent
+Icon
+Network Trash Folder
+Temporary Items
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - JetBrains
+.idea/
+*.iml
+*.iws
+.idea-compl
+*.ipr
+
+# IDE - Eclipse
+.project
+.classpath
+.settings/
+
+# Editor Files
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+*.swk
+*.bak
+*.backup
+*.orig
+*.ref
+*.sublime-workspace
+.http/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+log.txt
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# Scratch files
+.scratch/
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# Dependencies
+vendor/
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+.pip-cache/
+
+# Compressed files
+*.7z
+*.bz2
+*.gz
+*.dmg
+*.iso
+*.jar
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.xz
+*.zst
+*.pkg
+*.deb
+*.rpm
+*.cab
+*.msi
+*.msix
+*.war
+*.ear
+
+# Rust
+**/*.rs.bk
+**/*.rl.bk
+
+# Ruby
+*.gem
+.bundle/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+*.pyc
+
+# Java
+*.class
+*.jar
+*.war

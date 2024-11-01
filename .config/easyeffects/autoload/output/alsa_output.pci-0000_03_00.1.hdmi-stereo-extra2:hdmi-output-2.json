@@ -1,0 +1,6 @@
+{
+    "device": "alsa_output.pci-0000_03_00.1.hdmi-stereo-extra2",
+    "device-description": "Navi 21/23 HDMI/DP Audio Controller Digital Stereo (HDMI 3)",
+    "device-profile": "hdmi-output-2",
+    "preset-name": "Bass Boosted"
+}

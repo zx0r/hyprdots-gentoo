@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# Configuration
+WALLPAPERS_DIR="$HOME/.config/hypr/walls"
+THEME_FILE="$HOME/.config/rofi/scripts/wallpaper/style.rasi"
+
+# Build rofi theme configuration
+build_theme() {
+  local rows=$1
+  local cols=$2
+  local icon_size=$3
+
+  echo "element{orientation:vertical;}element-text{horizontal-align:0.5;}element-icon{size:$icon_size.0000em;}listview{lines:$rows;columns:$cols;}"
+}
+
+# Generate rofi command
+rofi_cmd() {
+  rofi -dmenu -i -show-icons \
+    -theme-str "$(build_theme 4 3 12)" \
+    -theme "${THEME_FILE}"
+}
+
+# Main execution
+main() {
+  # Get wallpaper selection
+  local choice=$(ls --escape "$WALLPAPERS_DIR" |
+    while read -r file; do
+      echo -en "$file\x00icon\x1f$WALLPAPERS_DIR/$file\n"
+    done | rofi_cmd)
+
+  # Exit if no selection made
+  [[ -z "$choice" ]] && exit 0
+
+  local wallpaper="$WALLPAPERS_DIR/$choice"
+
+  # Apply wallpaper
+  if swww img "$wallpaper" \
+    --transition-bezier 0.5,1.19,.8,.4 \
+    --transition-type wipe \
+    --transition-duration 2 \
+    --transition-fps 75; then
+
+    notify-send "Wallpaper Changed" -i "$wallpaper" --app-name=Wallpaper
+    exit 0
+  else
+    notify-send "Error" "Failed to change wallpaper" --app-name=Wallpaper
+    exit 1
+  fi
+}
+
+# Execute main function
+main

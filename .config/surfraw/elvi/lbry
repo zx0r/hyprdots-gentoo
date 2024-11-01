@@ -1,0 +1,31 @@
+#!/bin/sh
+# AUTHOR: lmburns (lmb@lmburns.com)
+#
+# DATE: 2021-06-13
+#
+# DESC: Elvi to search LBRY
+# elvis: lbry		-- Search LBRY for videos (www.lbry.tv)
+. surfraw || exit 1
+
+w3_usage_hook () {
+    cat <<EOF
+Usage: $w3_argv0 [options] [search words]...
+Description:
+  Search LBRY (www.lbry.tv) for videos
+EOF
+    w3_global_usage
+}
+
+w3_config
+w3_parse_args "$@"
+
+if [[ -z "$w3_args" ]]; then
+    w3_browse_url "https://www.lbry.tv"
+    exit
+fi
+
+set -f
+escaped_args="$(w3_url_of_arg $w3_args)"
+search_url="https://lbry.tv/$/search?q="
+search_url="${search_url}${escaped_args}"
+w3_browse_url "$search_url"

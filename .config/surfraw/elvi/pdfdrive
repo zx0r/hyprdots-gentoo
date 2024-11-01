@@ -1,0 +1,34 @@
+#!/bin/sh
+# AUTHOR: lmburns
+#
+# DATE: 2023-04-13
+#
+# DESC: Elvi to search pdfdrive (pdfdrive.com)
+# elvis: pdfdrive	-- Search pdfdrive (pdfdrive.com)
+. surfraw || exit 1
+
+w3_usage_hook ()
+{
+  cat <<EOF
+Usage: $w3_argv0 [options] [search words]...
+Description:
+  Search pdfdrive (pdfdrive.com)
+EOF
+  w3_global_usage
+}
+
+
+w3_config
+w3_parse_args "$@"
+
+if test -z "$w3_args"; then
+  w3_browse_url "https://pdfdrive.com"
+  exit
+fi
+
+set -f
+escaped_args="$(w3_url_of_arg $w3_args)"
+it="$escaped_args"
+search_url="https://pdfdrive.com/search?q="
+search_url="$search_url$escaped_args"
+w3_browse_url "$search_url"

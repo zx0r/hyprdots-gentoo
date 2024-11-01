@@ -1,0 +1,32 @@
+#!/bin/sh
+# AUTHOR: lmburns
+#
+# DATE: 2023-04-12 18:19
+#
+# DESC: Elvi to search binsearch
+# elvis: binsearch	-- Search binsearch for NZB (www.binsearch.info)
+. surfraw || exit 1
+
+w3_usage_hook () {
+    cat <<EOF
+Usage: $w3_argv0 [options] [search words]...
+Description:
+  Search binsearch (www.binsearch.info) for NZB
+
+  BinSearch is a binary newsgroup search engine. Our system crawls the most popular Usenet
+  newsgroups and makes the information found available for users to search. Unlike other search
+  engines that merely index text discussions, we store information about binary files that are
+  posted in newsgroups.
+EOF
+    w3_global_usage
+}
+
+w3_config
+w3_parse_args "$@"
+if test -z "$w3_args"; then
+    w3_browse_url "http://www.binsearch.info"
+    exit
+fi
+
+escaped_args="$(w3_url_of_arg $w3_args)"
+w3_browse_url "http://www.binsearch.info/?q=${escaped_args}&max=100&adv_age=1100&server="

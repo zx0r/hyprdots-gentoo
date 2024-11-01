@@ -1,0 +1,495 @@
+set sandbox none
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+set selection-clipboard clipboard
+set window-title-basename true
+set incremental-search true
+# set continuous-hist-save true  # Save history at each page change
+set search-hadjust true
+set adjust-open width
+set render-loading false
+set scroll-step 50
+set guioptions 'hv'
+set synctext-editor-command "nvim"
+
+# set adjust-open width
+
+set font "Fira Code Nerd Font"
+
+# map [presentation]
+# map [fullscreen]
+# map [index]
+# map [normal]
+
+# ━━━ Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# abort             - Switch back to normal mode
+# quit              - Quit zathura
+# change_mode       - Change current mode. (ARGS: mode as argument)
+#
+# toggle_presentation - Toggle presentation mode
+# toggle_fullscreen - Toggle fullscreen
+# toggle_index      - Show or hide index
+# toggle_page_mode  - Toggle between one and multiple pages per row
+# toggle_statusbar  - Show or hide statusbar
+# toggle_inputbar   - Show or hide inputbar
+# focus_inputbar    - Focus inputbar
+#
+# scroll            - Scroll
+# goto              - Go to a certain page
+# navigate          - Navigate to next/previous page
+# navigate_index    - Navigate through index
+# follow            - Follow a link
+# display_link      - Display link target
+# copy_link         - Copy the link
+# copy_filepath     - Copy current file path
+# search            - Start search
+# nohlsearch        - Disable search hl
+# bisect            - ???
+#
+# jumplist          - Move forwards/backwards in the jumplist. (ARGS: forward = next entry; backward = previous)
+# mark_add          - Set a quickmark
+# mark_evaluate     - Go to a quickmark
+#
+# adjust_window     - Adjust page width. (ARGS: best-fit; width)
+# rotate            - Rotate the page. (ARGS: rotate-ccw = counterclockwise; rotate-cw = clockwise)
+# zoom              - Zoom in or out
+# snap_to_page      - Snaps to the current page. Equivalent to goto <current_page>
+#
+# print             - Show print dialog
+# recolor           - Recolor pages
+# reload            - Reload the document
+#
+# feedkeys          - Simulate key presses. (uppercase use <S-LETTER>)
+# exec              - Execute an external command. ($FILE = current doc path; $PAGE curr page number)
+# set               - Set an option
+
+# ━━━ Arguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# backward        forward
+# previous        next
+# down            up
+# half-down       half-up
+# full-down       full-up
+# left            right
+# half-left       half-right
+# full-left       full-right
+# bottom          top
+# page-bottom     page-top
+# expand          collapse
+# expand-all      collapse-all
+# in              out
+# select          toggle
+# rotate-ccw      rotate-cw
+# best-fit        width
+# default         specific
+
+# ━━━ Input bar commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# bmark      - add bookmark
+# bdelete    - delete bookmark
+# blist      - list bookmarks
+# close      - close current file
+# info       - Show file information
+# exec       - Execute a command
+# !          - Execute a command
+# help       - Show help
+# open       - Open document
+# quit       - Close zathura
+# print      - Print document
+# save[!]    - Save document
+# write[!]   - Save document
+# export     - Save attachments
+# offset     - Set page offset
+# mark       - Mark current location within the document
+# delmarks   - Delete the specified marks
+# nohlsearch - Don't highlight current search results
+# hlsearch   - Highlight current search results
+# version    - Show version information
+# source     - Source config file
+
+unmap q
+unmap f
+unmap y
+unmap <C-n>
+
+map qq quit
+map Q  quit
+
+map J     zoom out
+map K     zoom in
+map <C-0> zoom default
+map <C--> zoom out
+map <C-=> zoom in
+map zo    zoom out
+map zi    zoom in
+map z0    zoom default
+map zZ    zoom specific
+
+map PageDown scroll full-down
+map PageUp   scroll full-up
+map d        scroll half-down
+map u        scroll half-up
+map <C-d>    scroll half-down
+map <C-u>    scroll half-up
+
+map g goto top
+map G goto bottom
+# map 2G => goes to second page
+# map H goto page-top
+# map L goto page-bottom
+map P snap_to_page
+
+map <C-j> bisect forward
+map <C-k> bisect backward
+map <C-i> jumplist forward
+map <C-o> jumplist backward
+
+map f  follow
+map F  display_link
+map c  copy_link
+map yl copy_link
+map yy copy_filepath
+
+map r reload
+map R rotate
+map i recolor
+map p print
+
+map <C-l> nohlsearch
+
+# map x     navigate_index
+map I     toggle_index
+map <Tab> toggle_index
+map <C-g> toggle_statusbar
+map D     toggle_page_mode
+map <C-p> toggle_page_mode
+
+map [normal]     f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 1                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+# set notification-error-bg   "#20202a"
+# set notification-error-fg   "#63718b"
+# set notification-warning-bg "#20202a"
+# set notification-warning-fg "#c34864"
+# set notification-bg         "#20202a"
+# set notification-fg         "#cddbf9"
+#
+# set completion-bg           "#20202a"
+# set completion-fg           "#cddbf9"
+# set completion-group-bg     "#313449"
+# set completion-group-fg     "#cddbf9"
+# set completion-highlight-bg "#b8dceb"
+# set completion-highlight-fg "#313449"
+#
+# set index-bg                "#20202a"
+# set index-fg                "#b1dba4"
+# set index-active-bg         "#b1dba4"
+# set index-active-fg         "#20202a"
+#
+# set inputbar-bg             "#20202a"
+# set inputbar-fg             "#cddbf9"
+#
+# set statusbar-bg            "#313449"
+# set statusbar-fg            "#cddbf9"
+#
+# set highlight-color         "#c8cca7"
+# set highlight-active-color  "#eac1c1"
+#
+# set default-bg              "#20202a"
+# set default-fg              "#cddbf9"
+# set render-loading          "true"
+# set render-loading-bg       "#20202a"
+# set render-loading-fg       "#cddbf9"
+#
+# set recolor-lightcolor      "#20202a"
+# set recolor-darkcolor       "#cddbf9"
+# set recolor                 true
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 2                          │
+#  ╰──────────────────────────────────────────────────────────╯
+# set notification-error-bg       "#ff5555" # Red
+# set notification-error-fg       "#f8f8f2" # Foreground
+# set notification-warning-bg     "#ffb86c" # Orange
+# set notification-warning-fg     "#44475a" # Selection
+# set notification-bg             "#282a36" # Background
+# set notification-fg             "#f8f8f2" # Foreground
+#
+# set completion-bg               "#282a36" # Background
+# set completion-fg               "#6272a4" # Comment
+# set completion-group-bg         "#282a36" # Background
+# set completion-group-fg         "#6272a4" # Comment
+# set completion-highlight-bg     "#44475a" # Selection
+# set completion-highlight-fg     "#f8f8f2" # Foreground
+#
+# set index-bg                    "#282a36" # Background
+# set index-fg                    "#f8f8f2" # Foreground
+# set index-active-bg             "#44475a" # Current Line
+# set index-active-fg             "#f8f8f2" # Foreground
+#
+# set inputbar-bg                 "#282a36" # Background
+# set inputbar-fg                 "#f8f8f2" # Foreground
+# set statusbar-bg                "#282a36" # Background
+# set statusbar-fg                "#f8f8f2" # Foreground
+#
+# set highlight-color             "#ffb86c" # Orange
+# set highlight-active-color      "#ff79c6" # Pink
+# # set highlight-color           "#575268"
+# # set highlight-fg              "#F5C2E7"
+# # set highlight-active-color    "#F5C2E7"
+#
+# set default-bg                  "#282a36" # Background
+# set default-fg                  "#f8f8f2" # Foreground
+#
+# set render-loading              true
+# set render-loading-fg           "#282a36" # Background
+# set render-loading-bg           "#f8f8f2" # Foreground
+
+# set recolor-lightcolor          "#282a36" # Background
+# set recolor-darkcolor           "#f8f8f2" # Foreground
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 3                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+# set notification-error-bg       "#DC3958" # Red
+# set notification-error-fg       "#f8f8f2" # Foreground
+# set notification-warning-bg     "#ffb86c" # Orange
+# set notification-warning-fg     "#44475a" # Selection
+# set notification-bg             "#120c20" # Background
+# set notification-fg             "#f8f8f2" # Foreground
+#
+# set completion-bg               "#120c20" # Background
+# set completion-fg               "#6272a4" # Comment
+# set completion-group-bg         "#120c20" # Background
+# set completion-group-fg         "#6272a4" # Comment
+# set completion-highlight-bg     "#44475a" # Selection
+# set completion-highlight-fg     "#f8f8f2" # Foreground
+#
+# set index-bg                    "#120c20" # Background
+# set index-fg                    "#f8f8f2" # Foreground
+# set index-active-bg             "#44475a" # Current Line
+# set index-active-fg             "#f8f8f2" # Foreground
+#
+# set inputbar-bg                 "#120c20" # Background
+# set inputbar-fg                 "#f8f8f2" # Foreground
+# set statusbar-bg                "#120c20" # Background
+# set statusbar-fg                "#f8f8f2" # Foreground
+#
+# set highlight-color             "#ffb86c" # Orange
+# set highlight-active-color      "#EA6962" # Pink
+#
+# set default-bg                  "#120c20" # Background
+# set default-fg                  "#f8f8f2" # Foreground
+#
+# set render-loading              true
+# set render-loading-fg           "#120c20" # Background
+# set render-loading-bg           "#f8f8f2" # Foreground
+#
+# set recolor-lightcolor          "#120c20" # Background
+# set recolor-darkcolor           "#f8f8f2" # Foreground
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 4                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+# set notification-error-bg       "#DC3958" # Red
+# set notification-error-fg       "#D9AE80" # Foreground
+# set notification-warning-bg     "#ffb86c" # Orange
+# set notification-warning-fg     "#44475a" # Selection
+# set notification-bg             "#221A02" # Background
+# set notification-fg             "#D9AE80" # Foreground
+#
+# set completion-bg               "#221A02" # Background
+# set completion-fg               "#6272a4" # Comment
+# set completion-group-bg         "#221A02" # Background
+# set completion-group-fg         "#6272a4" # Comment
+# set completion-highlight-bg     "#44475a" # Selection
+# set completion-highlight-fg     "#D9AE80" # Foreground
+#
+# set index-bg                    "#221A02" # Background
+# set index-fg                    "#D9AE80" # Foreground
+# set index-active-bg             "#44475a" # Current Line
+# set index-active-fg             "#D9AE80" # Foreground
+#
+# set inputbar-bg                 "#221A02" # Background
+# set inputbar-fg                 "#D9AE80" # Foreground
+# set statusbar-bg                "#221A02" # Background
+# set statusbar-fg                "#D9AE80" # Foreground
+#
+# set highlight-color             "#ffb86c" # Orange
+# set highlight-active-color      "#EA6962" # Pink
+#
+# set default-bg                  "#221A02" # Background
+# set default-fg                  "#D9AE80" # Foreground
+#
+# set render-loading              true
+# set render-loading-fg           "#221A02" # Background
+# set render-loading-bg           "#D9AE80" # Foreground
+#
+# set recolor-lightcolor          "#221A02" # Background
+# set recolor-darkcolor           "#D9AE80" # Foreground
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 5                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+# set notification-error-bg           "#1E1C31"
+# set notification-error-fg           "#F48FB1"
+# set notification-warning-bg         "#1E1c31"
+# set notification-warning-fg         "#FFE6B3"
+# set notification-bg                 "#1E1C31"
+# set notification-fg                 "#CBE3E7"
+#
+# set completion-bg                   "#1E1C31"
+# set completion-fg                   "#CBE3E7"
+# set completion-group-bg             "#A1EFD3"
+# set completion-group-fg             "#2D2B40"
+# set completion-highlight-bg         "#FFE6B3"
+# set completion-highlight-fg         "#2D2B40"
+#
+# set index-bg                        "#1E1C31"
+# set index-fg                        "#CBE3E7"
+# set index-active-bg                 "#CBE3E7"
+# set index-active-fg                 "#1E1C31"
+#
+# set inputbar-bg                     "#1E1C31"
+# set inputbar-fg                     "#CBE3E7"
+#
+# set statusbar-bg                    "#1E1C31"
+# set statusbar-fg                    "#CBE3E7"
+#
+# set highlight-color                 "#F48FB1"
+# set highlight-active-color          "#87DFEB"
+#
+# set default-bg                      "#1E1C31"
+# set default-fg                      "#CBE3E7"
+# set render-loading                  "true"
+# set render-loading-bg               "#3E3859"
+# set render-loading-fg               "#CBE3E7"
+#
+# set recolor-lightcolor              "#1E1C31"
+# set recolor-darkcolor               "#CBE3E7"
+# set recolor                         "true"
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 6                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+# set notification-error-bg       "#282828" # bg
+# set notification-error-fg       "#fb4934" # bright:red
+# set notification-warning-bg     "#282828" # bg
+# set notification-warning-fg     "#fabd2f" # bright:yellow
+# set notification-bg             "#282828" # bg
+# set notification-fg             "#b8bb26" # bright:green
+#
+# set completion-bg               "#504945" # bg2
+# set completion-fg               "#ebdbb2" # fg
+# set completion-group-bg         "#3c3836" # bg1
+# set completion-group-fg         "#928374" # gray
+# set completion-highlight-bg     "#83a598" # bright:blue
+# set completion-highlight-fg     "#504945" # bg2
+#
+# # Define the color in index mode
+# set index-bg                    "#504945" # bg2
+# set index-fg                    "#ebdbb2" # fg
+# set index-active-bg             "#83a598" # bright:blue
+# set index-active-fg             "#504945" # bg2
+#
+# set inputbar-bg                 "#282828" # bg
+# set inputbar-fg                 "#ebdbb2" # fg
+#
+# set statusbar-bg                "#504945" # bg2
+# set statusbar-fg                "#ebdbb2" # fg
+#
+# set highlight-color             "#fabd2f" # bright:yellow
+# set highlight-active-color      "#fe8019" # bright:orange
+#
+# set default-bg                  "#282828" # bg
+# set default-fg                  "#ebdbb2" # fg
+# set render-loading              true
+# set render-loading-bg           "#282828" # bg
+# set render-loading-fg           "#ebdbb2" # fg
+#
+# # Recolor book content's color
+# set recolor-lightcolor          "#282828" # bg
+# set recolor-darkcolor           "#ebdbb2" # fg
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 7                          │
+#  ╰──────────────────────────────────────────────────────────╯
+
+set default-bg                  "#191724"
+set default-fg                  "#e0def4"
+
+set statusbar-fg                "#e0def4"
+set statusbar-bg                "#555169"
+
+set inputbar-bg                 "#6e6a86"
+set inputbar-fg                 "#ebbcba"
+
+set notification-bg             "#555169"
+set notification-fg             "#e0def4"
+
+set notification-error-bg       "#f6c177"
+set notification-error-fg       "#555169"
+
+set notification-warning-bg     "#ebbcba"
+set notification-warning-fg     "#555169"
+
+set highlight-color             "#ebbcba"
+set highlight-active-color      "#eb6f92"
+
+set completion-bg               "#6e6a86"
+set completion-fg               "#ebbcba"
+
+set completion-highlight-fg     "#26233a"
+set completion-highlight-bg     "#ebbcba"
+
+set recolor-lightcolor          "#191724"
+set recolor-darkcolor           "#e0def4"
+
+#  ╭──────────────────────────────────────────────────────────╮
+#  │                         Theme 8                          │
+#  ╰──────────────────────────────────────────────────────────╯
+# set default-bg                  "#232136"
+# set default-fg                  "#e0def4"
+#
+# set statusbar-fg                "#e0def4"
+# set statusbar-bg                "#59546d"
+#
+# set inputbar-bg                 "#817c9c"
+# set inputbar-fg                 "#232136"
+#
+# set notification-bg             "#817c9c"
+# set notification-fg             "#232136"
+#
+# set notification-error-bg       "#817c9c"
+# set notification-error-fg       "#ea9a97"
+#
+# set notification-warning-bg     "#817c9c"
+# set notification-warning-fg     "#f6c177"
+#
+# set highlight-color             "#3e8fb0"
+# set highlight-active-color      "#9ccfd8"
+#
+# set completion-bg               "#817c9c"
+# set completion-fg               "#9ccfd8"
+#
+# set completion-highlight-fg     "#e0def4"
+# set completion-highlight-bg     "#9ccfd8"
+#
+# set recolor-lightcolor          "#232136"
+# set recolor-darkcolor           "#e0def4"
+
+
+# set recolor            false
+# set recolor-keephue    false
+set recolor true
+set recolor-keephue       true # keep original color
+set recolor-reverse-video true # Keep original color of images
+
+# vim:ft=zsh:

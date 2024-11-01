@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+get_connection_stats() {
+  results=$(syncthing cli show connections | jq '.connections[].connected')
+  total=$(echo "$results" | wc -l)
+  connected=$(echo "$results" | rg 'true' | wc -l)
+  echo "$connected $total"
+}
+
+get_transfer_totals() {
+  local bytes=$1
+  syncthing cli show connections |
+    jq ".$bytes" |
+    xargs -I {} echo "scale=2; {} / 1024 / 1024" | bc
+}
+
+# Get stats
+read -r connected total <<EOF
+$(get_connection_stats)
+EOF
+
+# Calculate transfers
+in_total=$(get_transfer_totals "total.inBytesTotal")
+out_total=$(get_transfer_totals "total.outBytesTotal")
+
+# Output JSON
+echo -n "{\"text\": \"󱇱 ${connected}/<span color='#505050'>${total}</span> [<span color='#505050'>${in_total}MB ${out_total}MB</span>]\", \"tooltip\": \"\", \"alt\": \"\", \"class\": \"syncthing\" }"

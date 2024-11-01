@@ -1,0 +1,17 @@
+# #################################################################
+# Commit Message Template
+# #################################################################
+#
+# Type: (feat, fix, docs, style, refactor, perf, test, chore)
+#
+# Subject: (max 50 characters)
+#
+# Body: (optional, can be more detailed)
+#
+# Problem:
+#
+# Solution:
+#
+# Notes:
+#
+# Footer: (optional, for referencing issues or breaking changes)

@@ -1,0 +1,246 @@
+#!/usr/bin/env bash
+
+emulate -L zsh
+setopt noclobber nounset extendedglob
+
+# Arguments:
+local filepath="${1}"         # Full path of the highlighted file
+local width="${2}"
+local height="${3}"
+local x_coord="${4}"
+local y_coord="${5}"
+
+local file_abspath="${filepath:A}"
+local file_ext="${(L)${filepath:e}}"
+
+# Settings:
+integer hl_max_size=262143  # 256KiB
+integer hl_tabwidth=8
+integer maxlen=200
+integer unhandled=0
+local output
+
+# This gives way more specific mimetypes
+# i.e., `.lua` = text/x-lua, not text/plain
+local mime2="$(mimetype -b -- "${filepath}")"
+local mime1="$(file --dereference --brief --mime-type -- "${filepath}")"
+
+# a common post-processing function used after most commands
+function trim() { head -n "$maxlen"; }
+
+function prev-image() {
+  if [[ -n $DISPLAY && -v FIFO_UEBERZUG ]]; then
+    #   "scaling_position_x": 0.5,
+    #   "scaling_position_y": 0.5,
+
+    # These load more images if the numbers are strings
+    (( $+commands[rjo] )) || { notify-send "Failure" "rjo isn't installed"; exit 1; }
+
+    command rjo \
+      "action=add" \
+      "identifier=PREVIEW" \
+      "x=\"$x_coord\"" \
+      "y=\"$y_coord\"" \
+      "width=\"$(( width - 1 ))\"" \
+      "height=\"$(( height - 1 ))\"" \
+      "scaler=contain" \
+      "path=$1" >"$FIFO_UEBERZUG"
+  else
+    # Handle non-ueberzug
+    case "$mime2" in
+      (image/*)
+        chafa --fill=block --symbols=block --size "$(( width - 4 ))"x"${height}" -- "$filepath"
+      ;;
+      (video/*)
+        # mediainfo -- "$filepath"
+        integer h_pct=$(( height * 0.8 ))
+        chafa --fill=block --symbols=block --size "$(( width - 4 ))"x"${h_pct}" -- "$1"
+      ;;
+     (*/pdf)
+        # pdftotext -l 10 -nopgbrk -q -- "$filepath" -
+        chafa --fill=block --symbols=block --size "$(( width - 4 ))"x"${height}" -- "$1"
+      ;;
+    esac
+  fi
+}
+
+function handle_mime() {
+  local mimetype="${1}" cache
+  case "${mimetype}" in
+    (inode/directory)
+      exa -T -- "${filepath}"
+    ;;
+    (text/html)
+      w3m -dump "${filepath}" - | bat -Pf --style auto
+      # bat -Pf --style auto -l html -- "${filepath}" ;;
+    ;;
+    (text/troff)
+      # color isn't shown
+      MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat --color=always -l man -p'" man -- "${filepath}"
+    ;;
+    (text/csv)
+      tidy-viewer --color 3 -a -n 28 <$filepath
+      # bat -Pf -l csv ${filepath} ;;
+    ;;
+    (text/*|*/xml|application/javascript)
+      bat -Pf --tabs "${hl_tabwidth}" --style auto -- "${filepath}"
+    ;;
+    (application/pgp-encrypted)
+      # gpg -d "${filepath}" - | bat -Pf --style auto
+      bat -Pf --style auto -- "${filepath}"
+    ;;
+    (application/zip)
+      atool --list -- "${filepath}"
+    ;;
+    (image/*)
+      prev-image "$filepath"
+      # prev-image "$filepath" "$width" "$height" "$x_coord" "$y_coord"
+    ;;
+    (audio/*|application/octet-stream)
+      mediainfo -- "$filepath"
+    ;;
+    (video/*)
+      cache="${XDG_CACHE_HOME}/lf/thumb.$(\
+        stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$file_abspath" | b3sum --no-names)"
+      [[ ! -f "${cache}.png" ]] && command ffmpegthumbnailer -s 0 -i "$filepath" -o "${cache}.png" -c png -f
+      prev-image "${cache}.png"
+    ;;
+    (*/pdf)
+      cache="${XDG_CACHE_HOME}/lf/thumb.$(\
+        stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$file_abspath" | b3sum --no-names)"
+      [[ ! -f "${cache}.jpg" ]] && command pdftoppm -jpeg -f 1 -singlefile "$file_abspath" "$cache"
+      prev-image "${cache}.jpg"
+    ;;
+    (application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+      docx2txt -- "${filepath}"
+    ;;
+    (*)
+      unhandled=1
+    ;;
+  esac
+}
+
+# zip lz4 lz lzma zst
+
+# # This requires atool
+function handle_other() {
+  (( unhandled )) && {
+    case "$filepath" in
+      (*.7z)
+        7z -p l "${filepath}"
+      ;;
+      (*.(tar|tar.gz|tgz|tar.bz2|tbz2|tar.xz|txz|tar.lz))
+        ouch list -- "${filepath}" | as-tree --color always | bat --style=grid --color=always
+      ;;
+      (*.tar.z)
+        tar tv "${filepath}" | lscolors | bat --style=grid --color=always
+      ;;
+      (*.(tar.lzma|tlz))
+        tar --lzma -xvf "${filepath}" | lscolors | bat --style=grid --color=always
+      ;;
+      (*.(zip|jar|war|ear|oxt))
+        unzip -l -- "${filepath}"
+      ;;
+      (*.(odt|ods|odp|sxw))
+        odt2txt -- "${filepath}" | bat --style=grid --color=always
+      ;;
+      (*.gz)
+        acat -- "${filepath}"
+      ;;
+      (*.tar)
+        tar tf "${filepath}"
+      ;;
+      (*.rar)
+        unrar l -- "${filepath}"
+      ;;
+      (*.iso)
+        iso-info --no-header -l -- "${filepath}"
+      ;;
+      (*.(a|ace|alz|ar|arc|arj|bz|bz2|cab|cpio|deb|cpt|deb|dgc|dgm|iso)\
+      |.*(jar|lha|lz|lzh|lzma|lzo|msi|pkg|rar|rpm|rz|shar|t7z|tar|tbz|tbz2|tgz)\
+      |.*(tlz|txz|tZ|tzo|war|xar|xpi|xz|Z|zip))
+         atool --list --each -- "${filepath}" | bat --style=grid
+         # bsdtar --list --file "${filepath}" | bat --style=grid
+       ;;
+      (*.sha1|*.sha256|*.sha512|*.md5)
+        rhash -c -- "${filepath}"
+      ;;
+      (*.[1-8])
+        man -- "${filepath}" | col -b | bat -Pf --style=grid -l man
+      ;;
+      (*.o)
+        nm -- "${filepath}" | bat -Pf --style=grid
+      ;;
+      (*.doc)
+        catdoc -- "${filepath}"
+      ;;
+      (*.docx)
+        docx2txt "${filepath}" -
+      ;;
+      (*.json)
+        jq --color-output . -- "${filepath}" || bat -Pf --style=auto -l json -- "${filepath}"
+      ;;
+      (*.asc|*.log)
+        bat -Pf --style auto -- "${filepath}"
+      ;;
+      (*.ipynb)
+        jupview -t KimbieDark -- "${filepath}"
+      ;;
+      (*.torrent)
+        transmission-show -- "${filepath}"
+      ;;
+
+      # (*.tgz|*.tar.gz)   tar tzf "${filepath}" ;;
+      # (*.tar.bz2|*.tbz2) tar tjf "${filepath}" ;;
+      # (*.tar.txz|*.txz|*.xz)  xz --list -- "${filepath}" ;;
+      (*)
+        bat -Pf --style auto -- "${filepath}"
+      ;;
+    esac
+  }
+}
+
+local -A C
+C=(
+  3  $'\e[38;5;3m'  12 $'\e[38;5;12m' 13  $'\e[38;5;13m'
+  14 $'\e[38;5;14m' 16 $'\e[38;5;16m' 17  $'\e[38;5;17m'
+  18 $'\e[38;5;18m' 19 $'\e[38;5;19m' 20  $'\e[38;5;20m'
+  21 $'\e[38;5;21m' 22 $'\e[38;5;22m' 42  $'\e[38;5;42m'
+  43 $'\e[38;5;43m' 45 $'\e[38;5;45m' 47  $'\e[38;5;47m'
+  51 $'\e[38;5;51m' 52 $'\e[38;5;52m' 53  $'\e[38;5;53m'
+  U  $'\e[4m'       B  $'\e[1m'       bg  $'\e[3m'
+  tb $' \t '        nl $'\n'          res $'\e[0m'
+  rnl $'\e[0m\n'
+)
+
+function handle_fallback() {
+  local t equals class sep
+  local -a mime0
+  class="File Type Classification"
+  # The ratios of Lf's screen are 1:2:3 by default, and preview is in 3rd screen
+  # equals=${${${(M)lf_ratios:#*3}:+(($COLUMNS * 3/6) - ($#class + 2)) / 2}:-18}
+  equals=$(( ${lf_ratios##*:} == 3 ? (($COLUMNS * 3/6) - ($#class + 2)) / 2 : 18 ))
+  print -rl "$C[nl]\
+$C[B]$C[52]${(l:equals::=:):-}$C[res] \
+$C[B]$C[42]${class}$C[res] \
+$C[B]$C[52]${(l:equals::=:):-}$C[res]" && {
+    sep=" $C[18]|$C[17] "
+    t="$(file --dereference --brief -- "${filepath}")"
+    mime0=( ${${(@s:,:)t}//((#s)[[:space:]]##|[[:space:]]##(#e))} )
+    stat -c "\
+$C[B]$C[16]info:     $C[17]${(pj:$sep:)mime0}$C[rnl]\
+$C[B]$C[16]mimetype: $C[18]${mime1}$C[res] $C[B]$C[12]|$C[res] $C[B]$C[18]${mime2}$C[rnl]\
+$C[B]$C[16]filetype: $C[43]%F$C[rnl]\
+$C[B]$C[16]inode:    $C[53]%i$C[rnl]\
+$C[B]$C[16]created:  $C[45]%w$C[rnl]\
+$C[B]$C[16]access:   $C[19]%x$C[rnl]\
+$C[B]$C[16]modified: $C[12]%z$C[rnl]" -- "${filepath}"
+  }
+    exit 1
+}
+
+handle_mime "$mime2"
+handle_other
+[[ ! -v FIFO_UEBERZUG || $mime1 != (image|video|pdf)/* ]] && handle_fallback
+
+exit 1
