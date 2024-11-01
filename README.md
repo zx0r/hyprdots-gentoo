@@ -12,8 +12,6 @@
 ![Workspace](https://raw.githubusercontent.com/zx0r/hyprdots-gentoo/main/assets/workspace.jpg)
 ![nvim](https://github.com/zx0r/hyprdots-gentoo/blob/main/assets/nvim.jpg)
 
-<!-- ```yaml
------>
 name: Cyberpunk Dotfiles
 
 description: |
@@ -33,6 +31,7 @@ description: |
     - `dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9`: An animated ocean-themed contribution visualization, perfectly suited for a cyberpunk vibe.
 
   Embrace the vibrant chaos of the cyberpunk aesthetic while contributing to this repository. Happy hacking!
+
 
 <div align="center">
   <a href="https://git.io/typing-svg">
