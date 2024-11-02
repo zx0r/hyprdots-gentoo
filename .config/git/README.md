@@ -83,72 +83,73 @@ user $ git push -u origin main
 ```
 
 ## Command Line Tools
-
 Each tool enhances your Git workflow in unique ways, from GUI interfaces to specialized management tools. The linked documentation provides detailed usage instructions and best practices.
 
-# Git and Related Tools
+**[dev-vcs/hub](https://github.com/github/hub)**:
+  - GitHub wrapper
+  - Extended GitHub integration
 
-## Core Version Control
+**[dev-util/github-cli](https://cli.github.com)**:
+  - Official GitHub CLI 
+  - Modern GitHub workflow
 
-### [dev-vcs/git](https://wiki.gentoo.org/wiki/Git)
-The industry-standard distributed version control system that efficiently handles projects of all sizes with speed and data integrity.
+**[dev-vcs/lazygit](https://github.com/jesseduffield/lazygit)**:
+  - Terminal UI
+  - Interactive Git operations
 
-### [dev-vcs/git-lfs](https://wiki.gentoo.org/wiki/Git-lfs)
-Git Large File Storage (LFS) replaces large files with text pointers while storing the file contents on a remote server, optimizing repository size and performance.
+**[dev-vcs/tig](https://github.com/jonas/tig)**:
+  - Text interface
+  - Repository browsing
 
-## GitHub Integration
+**[dev-vcs/git-lfs](https://wiki.gentoo.org/wiki/Git-lfs)**:
+  - Large file support
+  - Manage large files in Git
 
-### [dev-vcs/hub](https://github.com/github/hub)
-A command-line wrapper that extends Git with GitHub-specific features, making it easier to work with GitHub repositories.
+**[dev-vcs/git-flow](https://github.com/nvie/gitflow)**:
+  - Branching model
+  - Simplified Git workflows
 
-### [dev-util/github-cli](https://cli.github.com)
-GitHub's official command-line tool that brings pull requests, issues, and other GitHub concepts to the terminal.
-
-## Terminal Interfaces
-
-### [dev-vcs/lazygit](https://github.com/jesseduffield/lazygit)
-A simple terminal UI for Git commands, featuring intuitive keyboard shortcuts and real-time updates.
-
-### [dev-vcs/tig](https://github.com/jonas/tig)
-Text-mode interface for Git that serves as a repository browser, offering a more visual way to explore Git history.
-
-### [extrawurst/gitui](https://github.com/extrawurst/gitui)
-Fast and efficient terminal interface written in Rust, providing a modern UI for common Git operations.
-
-## Workflow Tools
-
-### [dev-vcs/git-flow](https://github.com/nvie/gitflow)
-A collection of Git extensions implementing Vincent Driessen's branching model for structured release management.
-
-### [dev-vcs/git-crypt](https://www.agwa.name/projects/git-crypt)
-Transparent file encryption in Git, allowing secure storage of sensitive files within a public repository.
+**[dev-vcs/git-crypt](https://www.agwa.name/projects/git-crypt)**:
+  - Git encryption
+  - Transparent encryption of files in a Git repository
 
 ## Enhancement Tools
 
-### [dev-util/git-delta](https://github.com/dandavison/delta)
-A syntax-highlighting pager for Git, offering improved diff output with features like side-by-side view and line numbering.
+**[dev-util/git-delta](https://github.com/dandavison/delta)**:
+  - Syntax highlighting pager
+  - Beautiful diffs for improved readability
 
-### [git-cliff](https://github.com/orhun/git-cliff)
-A highly customizable changelog generator that creates structured release notes from Git history.
+**[git-cliff](https://github.com/orhun/git-cliff)**:
+  - Changelog generator
+  - Automated release notes generation based on commit messages
 
-## Graphical Interfaces
+## Visual Tools
 
-### [dev-vcs/git-cola](https://git-cola.github.io)
-A sleek and powerful Git GUI client built with Qt, offering comprehensive repository management features.
+**[dev-vcs/git-cola](https://git-cola.github.io)**:
+  - Modern Git GUI
+  - Qt-based interface for easy Git operations
 
-### [dev-vcs/gitg](https://wiki.gnome.org/Apps/Gitg)
-A GNOME-native Git repository viewer with clean visualization of branches and commit history.
+**[dev-vcs/gitg](https://wiki.gnome.org/Apps/Gitg)**:
+  - GNOME Git viewer
+  - GTK integration for a native look and feel
 
-### [dev-vcs/qgit](https://github.com/tibirna/qgit)
-A Qt-based Git GUI viewer focused on simplicity and efficiency for quick repository interactions.
+**[dev-vcs/qgit](https://github.com/tibirna/qgit)**:
+  - Qt Git interface
+  - Lightweight operations for quick Git tasks
 
-## Integration and Management
+## Integration Tools
 
-### [ghq](https://github.com/x-motemen/ghq)
-A repository management tool that provides a consistent way to organize multiple repositories across different version control platforms.
+**[ghq](https://github.com/x-motemen/ghq)**:
+  - Repo management
+  - Multi-platform tool for organized repositories
 
-### [app-vim/fugitive](https://github.com/tpope/vim-fugitive)
-A powerful Git wrapper for Vim that enables seamless Git operations without leaving the editor.
+**[app-vim/fugitive](https://github.com/tpope/vim-fugitive)**:
+  - Vim Git wrapper
+  - Seamless integration with Vim for Git operations
+
+**[extrawurst/gitui](https://github.com/extrawurst/gitui)**:
+  - Blazing 💥 fast terminal-ui for git written in rust 🦀
+
 
 
 
